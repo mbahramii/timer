@@ -6,6 +6,56 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <div id="timer"> 00:00:00</div>
+    <button onclick="startTimer()">START</button>
+    <button onclick="stopTimer()" id="stop">STOP</button>
+    <button onclick="resetTimer()">RESET</button>
 </body>
+
+<Script>
+    let time = 0;
+    let timer; 
+    const timerElement = document.getElementById("timer");
+    const stopButton =  document.getElementById('stop')
+    
+    
+    const formatTime =(seconds)=>{
+
+        const hours = String(Math.floor(seconds/3600)).padStart(2, '0')
+        const minutes = String(Math.floor((seconds  %3600)/60)).padStart(2, '0')
+        const secs = String(Math.floor(seconds % 60)).padStart(2, '0')
+
+        return `${hours}:${minutes}:${secs}`
+    }
+
+    const startTimer =() =>{
+        if(!timer){
+            
+            timer = setInterval(() => {
+                time++
+                timerElement.textContent = formatTime(time)
+            }, 1000);
+        }
+    }
+
+    const stopTimer = () => {
+        if(timer) {
+            clearInterval(timer)
+            timer = null
+            stopButton.textContent = 'continue'
+        }
+        else{
+            startTimer()
+            stopButton.textContent = 'stop'    
+        }
+    }
+
+
+    const resetTimer = () => {
+        clearInterval(timer)
+            timer = null 
+            time = 0
+            timerElement.textContent = formatTime(time)
+    }
+</Script>
 </html>
